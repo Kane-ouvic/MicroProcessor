@@ -1,0 +1,5 @@
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB2-00.X\SCORE.ASM 42 : Found label after column 1. (case1)
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB2-00.X\SCORE.ASM 46 : Found label after column 1. (case2)
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB2-00.X\SCORE.ASM 51 : Found label after column 1. (next1)
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB2-00.X\SCORE.ASM 57 : Found label after column 1. (next2)
+Warning[205] C:\USERS\KANE\MPLABXPROJECTS\LAB2-00.X\SCORE.ASM 77 : Found directive in column 1. (end)

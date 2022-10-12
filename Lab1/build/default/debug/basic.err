@@ -1,0 +1,5 @@
+Warning[205] C:\USERS\KANE\MPLABXPROJECTS\LAB1-00.X\BASIC.ASM 1 : Found directive in column 1. (LIST)
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB1-00.X\BASIC.ASM 29 : Found label after column 1. (case1)
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB1-00.X\BASIC.ASM 32 : Found label after column 1. (case2)
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB1-00.X\BASIC.ASM 35 : Found label after column 1. (next)
+Warning[205] C:\USERS\KANE\MPLABXPROJECTS\LAB1-00.X\BASIC.ASM 38 : Found directive in column 1. (end)
