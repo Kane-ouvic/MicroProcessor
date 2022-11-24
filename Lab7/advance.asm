@@ -1,5 +1,4 @@
-;LIST p=18f4520
-    #include "p18f4520.inc"
+#include "p18f4520.inc"
 
 ; CONFIG1H
   CONFIG  OSC = INTIO67         ; Oscillator Selection bits (Internal oscillator block, port function on RA6 and RA7)
@@ -56,108 +55,56 @@
 ; CONFIG7H
   CONFIG  EBTRB = OFF           ; Boot Block Table Read Protection bit (Boot block (000000-0007FFh) not protected from table reads executed in other blocks)
 
-	L1 EQU 0x14
-	L2 EQU 0x15
-	org 0x00
-
-DELAY macro num1, num2
- local LOOP1
- local LOOP2
- MOVLW num2
- MOVWF L2
- LOOP2:
-    MOVLW num1
-    MOVWF L1
-LOOP1:
-    NOP
-    NOP
-    NOP
-    NOP
-    NOP
-    NOP
-    DECFSZ L1, 1
-    BRA LOOP1
-    DECFSZ L2, 1
-    BRA LOOP2
- 
- endm
-	
-goto initial
- 
-ISR:				; Interrupt????????????
-    org 0x08	
-    BTG INDF1, 0		; for asc/ desc
-    RLCF INDF0			; for second 
+    org 0x00
     
-    ; set interrupt
-    BCF INTCON, INT0IF
-    RETFIE                    ; ??ISR?????????????????GIE??1??????interrupt????
-  
-
-initial:
-    ; pic18f4520 digital
+goto Initial			    
+ISR:				
+    org 0x08                ; ????: ?0.5??????interrupt
+;    COMF LATA               ; interrupt???LATA??
+    RLNCF LATA
+    MOVFF LATA, WREG
+    CPFSEQ 0x001
+    GOTO next
+    BTG 0x000, 0
+    BTFSS 0x000, 0
+    GOTO case1
+    GOTO case2
+    case1: ; 0
+	MOVLW D'122'
+	MOVWF PR2
+	GOTO next
+    case2: ; 1
+	MOVLW D'244'
+	MOVWF PR2
+next:
+    BCF PIR1, TMR2IF        ; ??????TMR2IF?? (??flag bit)
+    RETFIE
+    
+Initial:			
     MOVLW 0x0F
     MOVWF ADCON1
-    
-    ; set btn
-    CLRF PORTB
-    BSF TRISB, 0
-    
-    ; set light
+    CLRF TRISA
     CLRF LATA
-    BCF TRISA, 0
-    BCF TRISA, 1
-    BCF TRISA, 2
-    BCF TRISA, 3
+    BSF RCON, IPEN
+    BSF INTCON, GIE
+    BCF PIR1, TMR2IF		; ????TIMER2??????????TMR2IF?TMR2IE?TMR2IP?
+    BSF IPR1, TMR2IP
+    BSF PIE1 , TMR2IE
+    MOVLW b'11111111'	        ; ?Prescale?Postscale???1:16???????256??????TIMER2+1
+    MOVWF T2CON		; ???TIMER?????????/4????????
+    MOVLW D'122'		; ???256 * 4 = 1024?cycles???TIMER2 + 1
+    MOVWF PR2			; ??????250khz???Delay 0.5?????????125000cycles??????Interrupt
+				; ??PR2??? 125000 / 1024 = 122.0703125? ???122?
+    MOVLW D'00100000'
+    MOVWF OSCCON	        ; ??????????250kHz
     
-;     set interrupt
-    BCF RCON, IPEN
-    BCF INTCON, INT0IF		; ?? Interrupt flag bit??
-    BSF INTCON, GIE		; ? Global interrupt enable bit??
-    BSF INTCON, INT0IE		; ?interrupt0 enable bit ?? (INT0?RB0 pin?????)
-    
-    LFSR 0, 0x500		; flag for 1/0.5/0.25
-    MOVLW b'01001001'		; rotate with carry
-    MOVWF INDF0
-    
-    LFSR 1, 0x510		; flag for direction
-    BSF INDF1, 0		; 1 = asc, 0 = desc
-    
-    MOVLW b'00010001'		; for rotate without carry
+    MOVLW b'00010001'
     MOVWF LATA
+    MOVWF 0x001
+    CLRF 0x000
     
 main:
-    BTFSC INDF0, 0
-    bra delay_1
-main_1:
-    BTFSC INDF0, 1
-    bra delay_05
-main_2:
-    BTFSC INDF0, 2
-    bra delay_25
-main_3:
-    BTFSC INDF1, 0
-    goto RL
-    RRNCF LATA      
-    BRA main
-    
-RL:
-    RLNCF LATA
-    bra main
-    
-delay_1:    
-    DELAY d'50', d'280'
-    bra main_1
-    
-delay_05:
-    DELAY d'50', d'180'	    ;0.5s
-    bra main_2
-    
-    
-delay_25:
-    DELAY d'50', d'90'
-    bra main_3
-    
-    
+    bra main	    
+
     
 end
