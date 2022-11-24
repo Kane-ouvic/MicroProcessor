@@ -1,0 +1,8 @@
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB7-00.X\TESTCODE3.ASM 59 : Found label after column 1. (L1)
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB7-00.X\TESTCODE3.ASM 60 : Found label after column 1. (L2)
+Warning[203] C:\USERS\KANE\MPLABXPROJECTS\LAB7-00.X\TESTCODE3.ASM 85 : Found opcode in column 1. (goto)
+Warning[202] C:\USERS\KANE\MPLABXPROJECTS\LAB7-00.X\TESTCODE3.ASM 66 : Argument out of range.  Least significant bits used.
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB7-00.X\TESTCODE3.ASM 68 : Found label after column 1. (LOOP2)
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB7-00.X\TESTCODE3.ASM 68 : Found label after column 1. (LOOP2)
+Warning[207] C:\USERS\KANE\MPLABXPROJECTS\LAB7-00.X\TESTCODE3.ASM 68 : Found label after column 1. (LOOP2)
+Warning[205] C:\USERS\KANE\MPLABXPROJECTS\LAB7-00.X\TESTCODE3.ASM 163 : Found directive in column 1. (end)
