@@ -10,17 +10,18 @@
 #pragma config CPD = OFF     // Data EEPROM?Memory Code Protection bit (Data EEPROM code protection off)
 
 #define _XTAL_FREQ 1000000
-int direction = 0;
+int option = 0;
 void __interrupt(high_priority) ISR(void)
 {
-    while(CCPR1L!=20) {
-        __delay_ms(5);
-        CCPR1L++;
-    }
-    while(CCPR1L!=4) {
-        __delay_ms(5);
-        CCPR1L--;
-    }
+//    while(CCPR1L!=20) {
+//        __delay_ms(5);
+//        CCPR1L++;
+//    }
+//    while(CCPR1L!=4) {
+//        __delay_ms(5);
+//        CCPR1L--;
+//    }
+    option = !option;
     INT0IF  = 0;
     return;
 }
@@ -53,6 +54,17 @@ int main(void)
   GIE  = 1;
   INT0IE = 1;
   INT0IF =0;
-  while (1);
+  while (1){
+     if(option){
+        while(CCPR1L!=20) {
+            __delay_ms(5);
+            CCPR1L++;
+        }
+        while(CCPR1L!=4) {
+            __delay_ms(5);
+            CCPR1L--;
+        }
+     }
+  }
   return 0;
 }

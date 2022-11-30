@@ -14,9 +14,10 @@ int direction = 0;
 void __interrupt(high_priority) ISR(void)
 {
     while(CCPR1L!=20) {
-        __delay_ms(7);
+        __delay_ms(6);
         CCPR1L++;
     }
+    __delay_ms(6);
     CCPR1L = 4;
     INT0IF  = 0;
     return;
